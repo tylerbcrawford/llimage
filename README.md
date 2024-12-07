@@ -1,4 +1,4 @@
-# LLiMage (MVP)
+# LLiMage
 
 ## Overview
 LLiMage is a local tool for extracting text and basic descriptions of images from PDFs, outputting the results as plain text. The MVP uses a simple web interface built with Flask and runs entirely on your machine.
