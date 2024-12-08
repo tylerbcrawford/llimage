@@ -43,3 +43,9 @@ logs/
 # Temporary files
 temp_*.pdf
 result_*.txt
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
