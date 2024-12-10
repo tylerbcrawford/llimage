@@ -1,0 +1,33 @@
+{
+    "processing": {
+        "chart_detection": {
+            "enabled": true,
+            "min_confidence": 0.7,
+            "types": ["bar", "line", "pie"]
+        },
+        "image": {
+            "preprocessing": {
+                "grayscale": true,
+                "denoise": true,
+                "threshold": "adaptive"
+            },
+            "ocr": {
+                "lang": "eng",
+                "config": "--psm 6"
+            }
+        }
+    },
+    "output": {
+        "format": "text",
+        "detail_level": "standard",
+        "include_confidence": false
+    },
+    "logging": {
+        "level": "INFO",
+        "file": "logs/llimage.log"
+    },
+    "security": {
+        "max_file_size_mb": 10,
+        "allowed_mime_types": ["application/pdf"]
+    }
+}
