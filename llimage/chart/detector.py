@@ -16,7 +16,7 @@ class ChartDetector:
         """Initialize the chart detector with configuration."""
         self.config = config or {}
         self.min_confidence = self.config.get('min_confidence', 0.7)
-        self.min_shape_area = self.config.get('min_shape_area', 100)
+        self.min_shape_area = self.config.get('min_shape_area', 50)
         self.shape_similarity_threshold = self.config.get('shape_similarity_threshold', 0.85)
         logger.info("Initializing ChartDetector with enhanced detection")
 
@@ -31,18 +31,25 @@ class ChartDetector:
         # Apply binary threshold
         _, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
 
-        # Clean up noise
+        # Clean up noise and separate shapes
         kernel = np.ones((3,3), np.uint8)
-        cleaned = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
-        cleaned = cv2.morphologyEx(cleaned, cv2.MORPH_OPEN, kernel)
+        cleaned = cv2.morphologyEx(binary, cv2.MORPH_OPEN, kernel)  # Remove small noise
+        
+        # Dilate to separate touching shapes
+        cleaned = cv2.dilate(cleaned, kernel, iterations=1)
+        # Erode back to original size while maintaining separation
+        cleaned = cv2.erode(cleaned, kernel, iterations=1)
+        
+        # Additional morphological operations for better separation
+        cleaned = cv2.morphologyEx(cleaned, cv2.MORPH_CLOSE, kernel)
 
         return cleaned
 
     def detect_shapes(self, image: np.ndarray) -> Tuple[List[np.ndarray], List[str], List[Dict[str, Any]]]:
         """Detect shapes with enhanced accuracy and feature extraction."""
-        # Find contours
-        contours, _ = cv2.findContours(
-            image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+        # Find all contours, including inner ones
+        contours, hierarchy = cv2.findContours(
+            image, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE
         )
 
         shapes = []
@@ -52,13 +59,37 @@ class ChartDetector:
         # Sort contours by area (largest first)
         contours = sorted(contours, key=cv2.contourArea, reverse=True)
 
+        # Keep track of processed areas to avoid duplicates
+        processed_areas = set()
+
         for contour in contours:
             # Filter small contours
             area = cv2.contourArea(contour)
             if area < self.min_shape_area:
                 continue
 
-            # Extract features with different epsilon values
+            # Check if this area overlaps with already processed ones
+            x, y, w, h = cv2.boundingRect(contour)
+            bbox = (x, y, w, h)
+            
+            # Skip if too similar to already processed shape
+            overlap = False
+            for other_bbox in processed_areas:
+                ox, oy, ow, oh = other_bbox
+                # Check for significant overlap
+                if (x < ox + ow and x + w > ox and
+                    y < oy + oh and y + h > oy):
+                    intersection = (min(x + w, ox + ow) - max(x, ox)) * \
+                                 (min(y + h, oy + oh) - max(y, oy))
+                    union = w * h + ow * oh - intersection
+                    if intersection / union > 0.5:  # More than 50% overlap
+                        overlap = True
+                        break
+            
+            if overlap:
+                continue
+
+            # Extract features
             features = self._extract_shape_features(contour)
             shape_type = self._classify_shape(features)
             
@@ -66,6 +97,7 @@ class ChartDetector:
                 shapes.append(contour)
                 shape_types.append(shape_type)
                 shape_features.append(features)
+                processed_areas.add(bbox)
 
         return shapes, shape_types, shape_features
 
@@ -91,86 +123,103 @@ class ChartDetector:
         circle_area = np.pi * radius * radius
         circularity = float(area) / circle_area if circle_area > 0 else 0
 
-        # Try different epsilon values for vertex detection
-        epsilons = [0.01, 0.02, 0.03, 0.04, 0.05]
-        best_approx = None
-        best_vertices = 0
-        best_epsilon = 0
+        # Calculate center of mass
+        M = cv2.moments(contour)
+        if M["m00"] != 0:
+            cx = int(M["m10"] / M["m00"])
+            cy = int(M["m01"] / M["m00"])
+        else:
+            cx, cy = x + w//2, y + h//2
 
-        for epsilon in epsilons:
-            approx = cv2.approxPolyDP(contour, epsilon * perimeter, True)
-            vertices = len(approx)
+        # Vertex detection with adaptive epsilon
+        if area < 500:  # Small shapes like points
+            epsilon = 0.02 * perimeter
+        elif area < 2000:  # Medium shapes
+            epsilon = 0.03 * perimeter
+        else:  # Large shapes like pie segments
+            epsilon = 0.04 * perimeter
+
+        approx = cv2.approxPolyDP(contour, epsilon, True)
+        vertices = len(approx)
+
+        # Calculate arc features for pie segments
+        arc_score = 0
+        if area > 1000:  # Only for larger shapes
+            # Calculate distances from center of mass to contour points
+            points = contour.reshape(-1, 2)
+            distances = np.sqrt(np.sum((points - [cx, cy]) ** 2, axis=1))
+            angles = np.arctan2(points[:, 1] - cy, points[:, 0] - cx)
+            angles = np.degrees(angles) % 360
             
-            # Prefer approximations with 3-4 vertices
-            if vertices in [3, 4]:
-                best_approx = approx
-                best_vertices = vertices
-                best_epsilon = epsilon
-                break
+            # Sort angles and find largest gap
+            angles.sort()
+            gaps = np.diff(angles)
+            max_gap = np.max(gaps) if len(gaps) > 0 else 0
             
-            # Otherwise take the first reasonable approximation
-            if best_approx is None and 3 <= vertices <= 6:
-                best_approx = approx
-                best_vertices = vertices
-                best_epsilon = epsilon
+            # Calculate scores
+            distance_score = 1.0 - np.std(distances) / np.mean(distances)
+            gap_score = max_gap / 360.0
+            
+            arc_score = (distance_score + gap_score) / 2
 
-        if best_approx is None:
-            best_approx = cv2.approxPolyDP(contour, 0.02 * perimeter, True)
-            best_vertices = len(best_approx)
-            best_epsilon = 0.02
-
-        print(f"Best epsilon: {best_epsilon}, vertices: {best_vertices}")
+        # Print debug info
+        print(f"Shape features - Area: {area:.1f}, Vertices: {vertices}, "
+              f"Circularity: {circularity:.2f}, Arc Score: {arc_score:.2f}")
 
         return {
             "area": area,
             "perimeter": perimeter,
             "bounding_box": (x, y, w, h),
-            "center": (x + w//2, y + h//2),
+            "center": (cx, cy),
             "solidity": solidity,
             "aspect_ratio": aspect_ratio,
             "extent": extent,
             "circularity": circularity,
-            "vertices": best_vertices,
-            "approx": best_approx,
-            "epsilon": best_epsilon
+            "vertices": vertices,
+            "approx": approx,
+            "arc_score": arc_score
         }
 
     def _classify_shape(self, features: Dict[str, Any]) -> str:
         """Classify shape type based on geometric properties."""
+        area = features["area"]
         vertices = features["vertices"]
         solidity = features["solidity"]
         circularity = features["circularity"]
         extent = features["extent"]
         aspect_ratio = features["aspect_ratio"]
-        epsilon = features["epsilon"]
+        arc_score = features["arc_score"]
 
-        # Print debug info for shape classification
+        # Print debug info
         print(f"\nClassifying shape with features:")
+        print(f"  Area: {area:.2f}")
         print(f"  Vertices: {vertices}")
         print(f"  Solidity: {solidity:.2f}")
         print(f"  Circularity: {circularity:.2f}")
         print(f"  Extent: {extent:.2f}")
         print(f"  Aspect Ratio: {aspect_ratio:.2f}")
-        print(f"  Epsilon: {epsilon:.3f}")
+        print(f"  Arc Score: {arc_score:.2f}")
 
-        # Circle detection - high circularity and solidity
-        if circularity > 0.80 and solidity > 0.90:
-            print("  -> Classified as circle")
-            return "circle"
-        
-        # Rectangle/Square detection - 4 vertices and high extent
-        if vertices == 4 and extent > 0.90:
+        # Line chart points (small, circular or near-circular)
+        if area < 1000 and solidity > 0.9:
+            # Either highly circular or octagonal (8 vertices)
+            if circularity > 0.45 or (vertices == 8 and extent > 0.7):
+                print("  -> Classified as point")
+                return "point"
+
+        # Pie chart segments (large, sector-shaped)
+        if area > 5000 and arc_score > 0.3 and solidity > 0.8:
+            print("  -> Classified as segment")
+            return "segment"
+
+        # Bar chart rectangles (high extent, 4 vertices)
+        if vertices == 4 and extent > 0.85:
             if 0.95 <= aspect_ratio <= 1.05:
                 print("  -> Classified as square")
                 return "square"
             else:
                 print("  -> Classified as rectangle")
                 return "rectangle"
-        
-        # Triangle detection - exactly 3 vertices and good solidity
-        if vertices == 3 and solidity > 0.85:
-            print("  -> Classified as triangle")
-            return "triangle"
 
         print("  -> Classified as unknown")
         return "unknown"
