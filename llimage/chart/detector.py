@@ -28,8 +28,11 @@ class ChartDetector:
         else:
             gray = image
 
+        # Add padding to help with edge detection
+        padded = cv2.copyMakeBorder(gray, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=0)
+
         # Apply binary threshold
-        _, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+        _, binary = cv2.threshold(padded, 127, 255, cv2.THRESH_BINARY)
 
         # Clean up noise and separate shapes
         kernel = np.ones((3,3), np.uint8)
@@ -56,8 +59,8 @@ class ChartDetector:
         shape_types = []
         shape_features = []
 
-        # Sort contours by area (largest first)
-        contours = sorted(contours, key=cv2.contourArea, reverse=True)
+        # Sort contours by x-coordinate for consistent ordering
+        contours = sorted(contours, key=lambda c: cv2.boundingRect(c)[0])
 
         # Keep track of processed areas to avoid duplicates
         processed_areas = set()
@@ -67,6 +70,9 @@ class ChartDetector:
             area = cv2.contourArea(contour)
             if area < self.min_shape_area:
                 continue
+
+            # Adjust contour coordinates for padding
+            contour = contour - 10  # Subtract padding offset
 
             # Check if this area overlaps with already processed ones
             x, y, w, h = cv2.boundingRect(contour)
@@ -202,24 +208,37 @@ class ChartDetector:
 
         # Line chart points (small, circular or near-circular)
         if area < 1000 and solidity > 0.9:
-            # Either highly circular or octagonal (8 vertices)
-            if circularity > 0.45 or (vertices == 8 and extent > 0.7):
+            # More lenient point detection for edge cases
+            if (circularity > 0.7 or  # High circularity
+                (vertices >= 5 and vertices <= 8 and extent > 0.6) or  # Octagonal-like
+                (area < 400 and extent > 0.6)):  # Small area with decent extent
                 print("  -> Classified as point")
                 return "point"
 
-        # Pie chart segments (large, sector-shaped)
-        if area > 5000 and arc_score > 0.3 and solidity > 0.8:
-            print("  -> Classified as segment")
-            return "segment"
-
         # Bar chart rectangles (high extent, 4 vertices)
-        if vertices == 4 and extent > 0.85:
+        if vertices == 4 and extent > 0.85 and solidity > 0.9:
             if 0.95 <= aspect_ratio <= 1.05:
                 print("  -> Classified as square")
                 return "square"
             else:
                 print("  -> Classified as rectangle")
                 return "rectangle"
+
+        # Triangle detection (3 vertices, moderate extent)
+        if vertices == 3 and solidity > 0.9:
+            print("  -> Classified as triangle")
+            return "triangle"
+
+        # Circle detection (high circularity, not a point)
+        if circularity > 0.8 and solidity > 0.9 and area >= 1000:
+            print("  -> Classified as circle")
+            return "circle"
+
+        # Pie chart segments (large, sector-shaped)
+        if area > 5000 and arc_score > 0.4 and solidity > 0.9:
+            if 0.3 <= circularity <= 0.8:  # Typical range for pie segments
+                print("  -> Classified as segment")
+                return "segment"
 
         print("  -> Classified as unknown")
         return "unknown"
