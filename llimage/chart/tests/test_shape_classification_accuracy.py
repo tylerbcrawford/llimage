@@ -17,7 +17,7 @@ def test_individual_shapes():
     # Test rectangle
     rect_img = np.zeros((200, 200), dtype=np.uint8)
     cv2.rectangle(rect_img, (50, 50), (150, 150), 255, -1)
-    cv2.imwrite('test_rectangle.png', rect_img)
+    cv2.imwrite('test_images/test_rectangle.png', rect_img)
     
     processed = detector.preprocess_image(rect_img)
     shapes, types, _ = detector.detect_shapes(processed)
@@ -27,7 +27,7 @@ def test_individual_shapes():
     # Test circle
     circle_img = np.zeros((200, 200), dtype=np.uint8)
     cv2.circle(circle_img, (100, 100), 50, 255, -1)
-    cv2.imwrite('test_circle.png', circle_img)
+    cv2.imwrite('test_images/test_circle.png', circle_img)
     
     processed = detector.preprocess_image(circle_img)
     shapes, types, _ = detector.detect_shapes(processed)
@@ -38,7 +38,7 @@ def test_individual_shapes():
     triangle_img = np.zeros((200, 200), dtype=np.uint8)
     pts = np.array([[100, 50], [50, 150], [150, 150]], dtype=np.int32)
     cv2.fillPoly(triangle_img, [pts], 255)
-    cv2.imwrite('test_triangle.png', triangle_img)
+    cv2.imwrite('test_images/test_triangle.png', triangle_img)
     
     processed = detector.preprocess_image(triangle_img)
     shapes, types, _ = detector.detect_shapes(processed)
@@ -71,11 +71,11 @@ def test_combined_shapes():
     cv2.fillPoly(img, [triangle_pts], 255)
     
     # Save original image
-    cv2.imwrite('test_all_shapes.png', img)
+    cv2.imwrite('test_images/test_all_shapes.png', img)
     
     # Process and detect shapes
     processed = detector.preprocess_image(img)
-    cv2.imwrite('test_all_shapes_processed.png', processed)
+    cv2.imwrite('test_images/test_all_shapes_processed.png', processed)
     
     shapes, types, features = detector.detect_shapes(processed)
     
@@ -99,7 +99,7 @@ def test_combined_shapes():
         # Draw each shape in a different gray level for visibility
         gray_level = 50 + (i * 50)  # 50, 100, 150 for different shapes
         cv2.drawContours(debug_img, [shape], -1, gray_level, 2)
-    cv2.imwrite('test_all_shapes_detected.png', debug_img)
+    cv2.imwrite('test_images/test_all_shapes_detected.png', debug_img)
     
     # Verify results
     assert len(shapes) == 3, f"Expected 3 shapes, but found {len(shapes)}: {types}"

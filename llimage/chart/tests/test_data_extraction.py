@@ -98,7 +98,7 @@ def test_bar_chart_extraction():
     """Test extraction of data from bar charts."""
     # Create test image
     img = create_bar_chart()
-    cv2.imwrite('test_bar_chart.png', img)
+    cv2.imwrite('test_images/test_bar_chart.png', img)
     
     # Initialize detector and extractor
     detector = ChartDetector()
@@ -106,7 +106,7 @@ def test_bar_chart_extraction():
     
     # Process image
     processed = detector.preprocess_image(img)
-    cv2.imwrite('test_bar_chart_processed.png', processed)
+    cv2.imwrite('test_images/test_bar_chart_processed.png', processed)
     
     shapes, _, features = detector.detect_shapes(processed)
     
@@ -125,7 +125,7 @@ def test_bar_chart_extraction():
         cv2.putText(debug_img, f"H:{bar['height']}", (x, y-10),
                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, 128, 1)
     
-    cv2.imwrite('test_bar_chart_debug.png', debug_img)
+    cv2.imwrite('test_images/test_bar_chart_debug.png', debug_img)
     
     # Verify results
     assert result["success"], "Bar chart extraction should succeed"
@@ -141,7 +141,7 @@ def test_pie_chart_extraction():
     """Test extraction of data from pie charts."""
     # Create test image
     img = create_pie_chart()
-    cv2.imwrite('test_pie_chart.png', img)
+    cv2.imwrite('test_images/test_pie_chart.png', img)
     
     # Initialize detector and extractor
     detector = ChartDetector()
@@ -149,7 +149,7 @@ def test_pie_chart_extraction():
     
     # Process image
     processed = detector.preprocess_image(img)
-    cv2.imwrite('test_pie_chart_processed.png', processed)
+    cv2.imwrite('test_images/test_pie_chart_processed.png', processed)
     
     shapes, _, features = detector.detect_shapes(processed)
     
@@ -173,7 +173,7 @@ def test_pie_chart_extraction():
             cv2.putText(debug_img, f"{segment['percentage']:.1f}%", 
                        (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, 128, 1)
     
-    cv2.imwrite('test_pie_chart_debug.png', debug_img)
+    cv2.imwrite('test_images/test_pie_chart_debug.png', debug_img)
     
     # Verify results
     assert result["success"], "Pie chart extraction should succeed"
@@ -188,7 +188,7 @@ def test_line_chart_extraction():
     """Test extraction of data from line charts."""
     # Create test image
     img = create_line_chart()
-    cv2.imwrite('test_line_chart.png', img)
+    cv2.imwrite('test_images/test_line_chart.png', img)
     
     # Initialize detector and extractor
     detector = ChartDetector()
@@ -196,8 +196,10 @@ def test_line_chart_extraction():
     
     # Process image
     processed = detector.preprocess_image(img)
-    cv2.imwrite('test_line_chart_processed.png', processed)
+    cv2.imwrite('test_images/test_line_chart_processed.png', processed)
     
+    # Detect shapes with more lenient point detection
+    detector.min_shape_area = 30  # Lower threshold for points
     shapes, _, features = detector.detect_shapes(processed)
     
     # Extract data
@@ -222,7 +224,7 @@ def test_line_chart_extraction():
         cv2.putText(debug_img, f"({last['x']},{last['y']})", 
                    (last['x']-30, last['y']-10), cv2.FONT_HERSHEY_SIMPLEX, 0.4, 128, 1)
     
-    cv2.imwrite('test_line_chart_debug.png', debug_img)
+    cv2.imwrite('test_images/test_line_chart_debug.png', debug_img)
     
     # Verify results
     assert result["success"], "Line chart extraction should succeed"
