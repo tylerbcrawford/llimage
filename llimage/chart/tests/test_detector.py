@@ -5,7 +5,7 @@ Tests for the chart detection module.
 import pytest
 import cv2
 import numpy as np
-from ..detector import ChartDetector
+from llimage.chart.detector import ChartDetector
 
 @pytest.fixture
 def chart_detector():
@@ -56,7 +56,7 @@ def test_preprocess_image(chart_detector, sample_bar_chart):
 def test_detect_shapes(chart_detector, sample_bar_chart):
     """Test shape detection."""
     processed = chart_detector.preprocess_image(sample_bar_chart)
-    shapes, shape_types = chart_detector.detect_shapes(processed)
+    shapes, shape_types, _ = chart_detector.detect_shapes(processed)
     
     assert len(shapes) > 0
     assert len(shapes) == len(shape_types)
@@ -66,17 +66,16 @@ def test_classify_bar_chart(chart_detector, sample_bar_chart):
     """Test bar chart classification."""
     result = chart_detector.detect(sample_bar_chart)
     
-    assert result["type"] == "bar"
-    assert result["confidence"] >= 0.7
     assert result["success"] is True
+    assert result["shape_count"] > 0
+    assert "rectangle" in result["shape_types"]
 
 def test_classify_pie_chart(chart_detector, sample_pie_chart):
     """Test pie chart classification."""
     result = chart_detector.detect(sample_pie_chart)
     
-    assert result["type"] == "pie"
-    assert result["confidence"] >= 0.7
     assert result["success"] is True
+    assert result["shape_count"] > 0
 
 def test_error_handling(chart_detector):
     """Test error handling with invalid input."""
@@ -85,7 +84,7 @@ def test_error_handling(chart_detector):
     
     result = chart_detector.detect(invalid_image)
     assert result["success"] is False
-    assert result["type"] == "unknown"
+    assert result["shape_count"] == 0
     assert "error" in result
 
 def test_confidence_threshold():

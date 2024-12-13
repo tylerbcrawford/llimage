@@ -55,8 +55,8 @@ def test_shape_detection_real_chart(chart_detector, image_processor, sample_char
     # Process the image
     processed_image = image_processor.preprocess(sample_chart_image)
     
-    # Detect shapes
-    shapes, shape_types = chart_detector.detect_shapes(processed_image)
+    # Detect shapes without features
+    shapes, shape_types = chart_detector.detect_shapes(processed_image, include_features=False)
     
     # Verify shapes were detected
     assert len(shapes) > 0, "Should detect shapes in the chart"
