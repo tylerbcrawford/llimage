@@ -2,6 +2,20 @@
 
 Empower your PDF data for LLM processing—securely, locally, and efficiently.
 
+## 📑 Table of Contents
+- [Overview](#-overview)
+- [Why LLiMage?](#-why-llimage)
+- [Privacy and Security First](#-privacy-and-security-first)
+- [Features](#-features)
+- [Requirements](#️-requirements)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Progress and Capabilities](#-progress-and-capabilities)
+- [Future Plans](#-future-plans)
+- [Development](#-development)
+- [Contributing](#-contributing)
+- [License](#-license)
+
 ## 🌟 Overview
 
 LLiMage transforms your PDFs into richer, more accessible data streams ready for large language models (LLMs)—even those that don't accept images. By extracting text and intelligently describing embedded images, LLiMage ensures that no valuable information is lost. With a simple web interface and fully local processing, it's designed for both everyday office users and researchers who want to get the most out of their documents, all while respecting privacy and enhancing token efficiency to save on costs.
