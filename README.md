@@ -42,6 +42,10 @@ LLiMage runs locally, ensuring your documents never leave your machine. No exter
   - Supports radial arrangements and grid patterns
 - **Multiple Output Formats**: Text and JSON outputs available
 - **Visual Debugging Tools**: Debug output showing detected shapes and patterns
+- **Flexible Image Processing** (Coming in Phase 3):
+  - Option to save images as separate files with standardized naming
+  - Advanced textual descriptions of images and charts
+  - Configurable output preferences
 
 ## 🛠️ Requirements
 - Python 3.x
@@ -100,6 +104,11 @@ LLiMage runs locally, ensuring your documents never leave your machine. No exter
 - ⏳ Performance optimizations
 
 ## 🎯 Future Plans
+- Advanced Image Output Options (Phase 3):
+  * Separate image file extraction with standardized naming
+  * Enhanced textual descriptions of visual content
+  * User-configurable output preferences
+  * Potential hybrid mode combining both approaches
 - Support for more complex chart types
 - Multiple-page PDFs with better performance
 - Support for additional output formats

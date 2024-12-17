@@ -49,10 +49,20 @@
   - [ ] Plain text (enhanced)
   - [ ] JSON structure
 - [ ] Advanced image output options
-  - [ ] Separate image file extraction
-  - [ ] Enhanced textual descriptions
-  - [ ] Configurable output modes
-  - [ ] Hybrid mode support
+  - [ ] Option 1: Separate Image Files
+    * Extract images as PNG/JPEG files
+    * Create dedicated output_images folder
+    * Standardized naming (pageX_imgY.png)
+    * Image reference system in text output
+  - [ ] Option 2: Textual Descriptions
+    * Generate text-based descriptions
+    * OCR and visual content analysis
+    * Direct embedding in text output
+    * No separate image files
+  - [ ] Configuration & Control
+    * User-facing option selection
+    * Default to textual descriptions
+    * Future hybrid mode support
 - [ ] UI enhancements
   - [ ] Progress indicators
   - [ ] Visual feedback
@@ -103,19 +113,22 @@
 - [ ] Performance optimization
 
 #### Phase 3.3: Advanced Image Processing
-- [ ] Separate image file extraction system
+- [ ] Separate Image File Mode
   - [ ] Output directory structure
-  - [ ] Standardized naming scheme
-  - [ ] Image reference system
-- [ ] Enhanced textual descriptions
-  - [ ] ML-based description generation
+  - [ ] Standardized naming scheme (pageX_imgY.png)
+  - [ ] Image reference system in text output
+  - [ ] File format handling (PNG/JPEG)
+- [ ] Textual Description Mode
+  - [ ] OCR integration
+  - [ ] Visual content analysis
   - [ ] Context-aware descriptions
   - [ ] Chart-specific interpretations
-- [ ] Configurable output modes
-  - [ ] User interface controls
+- [ ] Configuration System
+  - [ ] Mode selection interface
   - [ ] Environment variable support
   - [ ] Command-line options
-- [ ] Hybrid mode implementation
+  - [ ] Default mode settings
+- [ ] Hybrid Mode (Future)
   - [ ] Combined output support
   - [ ] Flexible configuration
   - [ ] Performance optimization
@@ -137,11 +150,14 @@
 13. Test suite enhancement
 14. Documentation updates
 15. README restructured with table of contents
-16. phase3 branch created
+16. Phase 3 planning completed
 
 ### Current Focus
 - Enhanced data extraction
 - Output format improvements
 - Advanced image output options
+  * Separate file extraction system
+  * Enhanced textual descriptions
+  * Configuration system design
 - UI enhancements
 - Performance optimization

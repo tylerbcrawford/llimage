@@ -6,7 +6,7 @@ LLiMage is a Python-based web application designed for efficient PDF processing 
 
 ### Key Features
 - PDF text extraction with high accuracy
-- Image OCR processing for embedded images
+- Image OCR processing with flexible output options
 - Advanced chart recognition and analysis
 - Shape detection and classification
 - Pattern recognition and structural analysis
@@ -171,6 +171,17 @@ llimage/
    - OCR processing
    - Shape detection
    - Pattern recognition
+   - Flexible output options:
+     - Option 1: Separate Image Files
+       * Extracts images to separate files (PNG/JPEG)
+       * Creates dedicated output_images folder
+       * Uses standardized naming (pageX_imgY.png)
+       * References images in text output
+     - Option 2: Textual Descriptions
+       * Generates text-based descriptions
+       * Includes OCR results and visual content analysis
+       * Embeds descriptions in text output
+       * No separate image files saved
 
 4. **Chart Recognition**
    - Shape detection and classification
@@ -183,12 +194,19 @@ llimage/
    - Compilation of extracted data
    - Multiple output formats
    - Download link provision
+   - Configurable image handling modes
 
 ### Usage Example
 1. Access web interface at `http://127.0.0.1:5000`
 2. Upload PDF through drag-and-drop or file selection
 3. Wait for processing completion
 4. Download results in desired format
+
+### Image Output Configuration
+- User-configurable image handling mode
+- Default: Textual descriptions mode
+- Optional: Separate image files mode
+- Future: Hybrid mode support (both descriptions and files)
 
 ## 📖 6. Documentation
 
@@ -231,6 +249,15 @@ pytest
 
 ## 🚀 9. Future Enhancements
 
+Phase 3 - Advanced Image Processing:
+- Flexible image output options:
+  * Separate image file extraction
+  * Advanced textual descriptions
+  * Hybrid mode support
+- Enhanced image analysis and description generation
+- Configurable output preferences
+
+Additional Planned Features:
 - Multi-page PDF support
 - Enhanced data extraction
 - Multiple output formats
