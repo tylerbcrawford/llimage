@@ -141,5 +141,5 @@ This project is licensed under the GNU Affero General Public License v3.0 (AGPL-
 Key points:
 - Free for personal and educational use
 - Commercial use requires a separate license
-- Contact tylerbcrawford@gmail.com for commercial licensing
+- Contact me through GitHub for commercial licensing
 - Full AGPL-3.0 terms apply to non-commercial use
