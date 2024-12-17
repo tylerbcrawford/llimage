@@ -1,6 +1,6 @@
 # 🖼️ LLiMage
 
-Empower your PDF data for LLM processing—securely, locally, and efficiently.
+Transform your PDF data for LLM processing—securely, locally, and efficiently.
 
 ## 📑 Table of Contents
 - [Overview](#-overview)
