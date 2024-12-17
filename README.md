@@ -136,4 +136,10 @@ pytest
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
 ## 📄 License
-MIT License
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0) with additional non-commercial use restrictions. See the [LICENSE](LICENSE) file for details.
+
+Key points:
+- Free for personal and educational use
+- Commercial use requires a separate license
+- Contact tylerbcrawford@gmail.com for commercial licensing
+- Full AGPL-3.0 terms apply to non-commercial use
