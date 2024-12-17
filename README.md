@@ -1,27 +1,40 @@
-# LLiMage 🖼️
+# 🖼️ LLiMage
 
-## Overview 🌟
-LLiMage is a local tool for extracting text and analyzing images from PDFs, with advanced capabilities for chart detection and analysis. The MVP uses a simple web interface built with Flask and runs entirely on your machine.
+Empower your PDF data for LLM processing—securely, locally, and efficiently.
 
-## Features ✨
-- Drag-and-drop or file upload your PDF
-- Extracts all text from the PDF
-- Identifies images and runs OCR to extract any readable text from them
-- Advanced chart detection and analysis:
+## 🌟 Overview
+
+LLiMage transforms your PDFs into richer, more accessible data streams ready for large language models (LLMs)—even those that don't accept images. By extracting text and intelligently describing embedded images, LLiMage ensures that no valuable information is lost. With a simple web interface and fully local processing, it's designed for both everyday office users and researchers who want to get the most out of their documents, all while respecting privacy and enhancing token efficiency to save on costs.
+
+## 🎯 Why LLiMage?
+
+- **For Office Users**: Seamlessly process reports, presentations, and documents with charts and images. Convert them into detailed text files that free-tier LLMs can interpret, helping you get the most from your data without breaking the bank.
+- **For Researchers & Professionals**: Streamline complex PDFs and image-heavy sources into a text-only format, offering maximum flexibility to choose any LLM—no image constraints, no vendor lock-ins. Gain full control over your data for in-depth analysis and unlock new insights in your workflow.
+
+## 🔒 Privacy and Security First
+
+LLiMage runs locally, ensuring your documents never leave your machine. No external calls mean your sensitive data stays under your control, reinforcing good security and compliance practices while demonstrating robust cybersecurity principles.
+
+## ✨ Features
+
+- **Simple, Intuitive Interface**: Drag-and-drop or browse to select a PDF file.
+- **Comprehensive Data Extraction**: Extracts all text from the PDF and uses OCR to identify and interpret embedded images.
+- **LLM-Ready Output**: Produces a single .txt file with all textual content and image descriptions, allowing an LLM without image-processing capabilities to understand the full context.
+- **Local-Only Processing**: No external data sharing by default. Your data never leaves your machine.
+- **Advanced Chart Detection and Analysis**:
   - Detects and classifies different chart types (bar, line, pie)
   - Analyzes structural relationships between shapes
   - Extracts data points and relationships from charts
   - Supports radial arrangements and grid patterns
-- Provides detailed descriptions for images and charts
-- Outputs in multiple formats (text, JSON)
-- Fully local: no external data sharing unless you choose to add it later
+- **Multiple Output Formats**: Text and JSON outputs available
+- **Visual Debugging Tools**: Debug output showing detected shapes and patterns
 
-## Requirements 🛠️
+## 🛠️ Requirements
 - Python 3.x
 - Tesseract OCR installed locally (e.g., `brew install tesseract` on macOS)
 - OpenCV for image processing and chart detection
 
-## Installation 📦
+## 📦 Installation
 1. Clone this repository
 2. Create and activate virtual environment:
    ```bash
@@ -40,7 +53,7 @@ LLiMage is a local tool for extracting text and analyzing images from PDFs, with
    ```
 4. Ensure Tesseract is installed and accessible in your system's PATH
 
-## Usage 🚀
+## 🚀 Usage
 1. Activate virtual environment (if not already activated):
    ```bash
    # On macOS/Linux:
@@ -59,15 +72,7 @@ LLiMage is a local tool for extracting text and analyzing images from PDFs, with
    - JSON output with structured data from charts
    - Visual debug output showing detected shapes and patterns
 
-## License 📄
-MIT License
-
-## Security and Privacy 🔒
-- All processing is done locally by default
-- No external calls unless explicitly added later
-- Logs are stored locally. Secure and monitor these logs if working with sensitive documents
-
-## Progress and Capabilities 📈
+## 📈 Progress and Capabilities
 - ✅ Basic text extraction and OCR
 - ✅ Chart detection and classification
 - ✅ Shape analysis and feature extraction
@@ -80,7 +85,7 @@ MIT License
 - ⏳ UI enhancements
 - ⏳ Performance optimizations
 
-## Future Plans 🎯
+## 🎯 Future Plans
 - Support for more complex chart types
 - Multiple-page PDFs with better performance
 - Support for additional output formats
@@ -91,7 +96,7 @@ MIT License
 - Improved scalability for larger and more complex PDFs
 - Machine learning integration for improved chart recognition
 
-## Development 🔧
+## 🔧 Development
 To run tests:
 ```bash
 # Activate virtual environment if not already activated
@@ -104,5 +109,8 @@ pip install pytest
 pytest
 ```
 
-## Contributing 🤝
+## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+## 📄 License
+MIT License

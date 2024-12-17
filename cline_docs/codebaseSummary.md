@@ -105,6 +105,33 @@ llimage/
 3. Results compiled in multiple formats
 4. Download options provided
 
+### Planned Phase 3 Flow
+1. User uploads PDF
+2. User selects output preferences:
+   - Image handling mode (separate files or textual descriptions)
+   - Output format preferences
+   - Additional configuration options
+3. Server processes file:
+   - Text extraction
+   - Image identification and processing
+   - Chart detection and analysis
+   - Shape classification
+   - Feature extraction
+   - Data point analysis
+4. Based on selected mode:
+   - Option 1: Separate Image Files
+     - Images extracted and saved separately
+     - Standardized naming scheme applied
+     - References included in text output
+   - Option 2: Textual Descriptions
+     - ML-based image descriptions generated
+     - Descriptions integrated into text output
+     - No separate image files created
+   - Hybrid Mode (when configured)
+     - Both separate files and descriptions provided
+5. Results compiled according to preferences
+6. Download options provided
+
 ## Recent Changes
 - Implemented chart detection module
 - Added shape classification system
@@ -119,6 +146,23 @@ llimage/
 - UI enhancements
 - Performance optimizations
 - Batch processing capabilities
+- Advanced image output options:
+  - Separate image file extraction system
+    - Dedicated output directory structure
+    - Standardized naming conventions
+    - Image reference system
+  - Enhanced textual descriptions
+    - ML-based description generation
+    - Context-aware descriptions
+    - Chart-specific interpretations
+  - Configurable output modes
+    - User interface controls
+    - Environment variable support
+    - Command-line options
+  - Hybrid mode support
+    - Combined output capabilities
+    - Flexible configuration options
+    - Performance optimizations
 
 ## External Dependencies
 ### Current

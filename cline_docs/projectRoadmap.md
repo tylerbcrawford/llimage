@@ -52,6 +52,11 @@
   - [ ] Progress indicators
   - [ ] Visual feedback
   - [ ] Error handling
+- [ ] Advanced image output options
+  - [ ] Separate image file extraction
+  - [ ] Enhanced textual descriptions
+  - [ ] Configurable output modes
+  - [ ] Hybrid mode support
 
 ## Completion Criteria
 ### MVP Phase (Completed)
@@ -97,6 +102,24 @@
 - [ ] Enhanced documentation
 - [ ] Performance optimization
 
+#### Phase 3.3: Advanced Image Processing
+- [ ] Separate image file extraction system
+  - [ ] Output directory structure
+  - [ ] Standardized naming scheme
+  - [ ] Image reference system
+- [ ] Enhanced textual descriptions
+  - [ ] ML-based description generation
+  - [ ] Context-aware descriptions
+  - [ ] Chart-specific interpretations
+- [ ] Configurable output modes
+  - [ ] User interface controls
+  - [ ] Environment variable support
+  - [ ] Command-line options
+- [ ] Hybrid mode implementation
+  - [ ] Combined output support
+  - [ ] Flexible configuration
+  - [ ] Performance optimization
+
 ## Progress History
 ### Completed Tasks
 1. Initial project setup and structure
@@ -119,3 +142,4 @@
 - Output format improvements
 - UI enhancements
 - Performance optimization
+- Advanced image output options implementation

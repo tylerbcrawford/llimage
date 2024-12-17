@@ -1,6 +1,6 @@
-# LLiMage Documentation 📚
+# 📚 LLiMage Documentation
 
-## 1. Project Overview 🎯
+## 🎯 1. Project Overview
 
 LLiMage is a Python-based web application designed for efficient PDF processing and analysis. It provides local processing capabilities for extracting text, performing OCR on images, and analyzing charts within PDF documents.
 
@@ -15,7 +15,7 @@ LLiMage is a Python-based web application designed for efficient PDF processing 
 - Multiple output formats (text, JSON)
 - Comprehensive test suite
 
-## 2. Tech Stack 🛠️
+## 🛠️ 2. Tech Stack
 
 ### Core Technologies
 - **Python 3.x**
@@ -58,7 +58,7 @@ LLiMage is a Python-based web application designed for efficient PDF processing 
   - Responsive design
   - Client-side file handling
 
-## 3. Installation and Setup 🚀
+## 🚀 3. Installation and Setup
 
 ### Prerequisites
 1. Python 3.x
@@ -109,7 +109,7 @@ pip install -r requirements.txt
 3. Install OpenCV: `pip install opencv-python`
 4. Follow similar Python setup steps as above
 
-## 4. Code Structure 📁
+## 📁 4. Code Structure
 
 ```
 llimage/
@@ -152,7 +152,7 @@ llimage/
     └── codebaseSummary.md# Code overview
 ```
 
-## 5. Functionality 🔧
+## 🔧 5. Functionality
 
 ### PDF Processing Pipeline
 1. **File Upload**
@@ -190,7 +190,7 @@ llimage/
 3. Wait for processing completion
 4. Download results in desired format
 
-## 6. Documentation 📖
+## 📖 6. Documentation
 
 ### Environment Variables
 - No environment variables required for basic setup
@@ -201,7 +201,7 @@ llimage/
 - `.gitignore`: Version control exclusions
 - `config/*.json`: Application configuration
 
-## 7. Testing 🧪
+## 🧪 7. Testing
 
 ### Running Tests
 ```bash
@@ -222,14 +222,14 @@ pytest
   - Shape detection (test_shapes*.png)
   - Pattern recognition (test_*_chart*.png)
 
-## 8. Known Issues and Limitations ⚠️
+## ⚠️ 8. Known Issues and Limitations
 
 - Limited to single-page PDFs in current version
 - Memory-intensive for large PDFs
 - No persistent storage of results
 - Limited error handling for complex PDFs
 
-## 9. Future Enhancements 🚀
+## 🚀 9. Future Enhancements
 
 - Multi-page PDF support
 - Enhanced data extraction
@@ -241,7 +241,7 @@ pytest
 - Batch processing
 - API development
 
-## 10. Contributing 🤝
+## 🤝 10. Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -255,7 +255,7 @@ pytest
 - Update documentation
 - Maintain security focus
 
-## 11. Acknowledgments 🙏
+## 🙏 11. Acknowledgments
 
 - Flask framework community
 - Tesseract OCR project
@@ -266,7 +266,7 @@ pytest
   - pytesseract
 - Open source community
 
-## 12. License 📄
+## 📄 12. License
 
 MIT License
 

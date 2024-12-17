@@ -5,6 +5,7 @@
 - Enhancing data extraction capabilities
 - Improving output formats
 - Optimizing performance
+- Implementing advanced image output options
 
 ## Context
 Phase 1 (MVP) completed with:
@@ -26,6 +27,10 @@ Phase 3 is beginning with:
 - Multiple output formats
 - UI improvements
 - Performance optimization
+- Advanced image handling options
+  - Separate image file extraction
+  - Enhanced textual descriptions
+  - Configurable output modes
 
 ## Next Steps
 1. Phase 2 Completion ✓
@@ -79,6 +84,22 @@ Phase 3 is beginning with:
      - [ ] Memory usage
      - [ ] Processing speed
      - [ ] Resource management
+   - [ ] Advanced image output options
+     - [ ] Separate image file extraction
+       - [ ] Output directory structure
+       - [ ] Standardized naming scheme
+       - [ ] Image reference system
+     - [ ] Enhanced textual descriptions
+       - [ ] ML-based description generation
+       - [ ] Context-aware descriptions
+       - [ ] Chart-specific interpretations
+     - [ ] Configurable output modes
+       - [ ] User interface controls
+       - [ ] Environment variable support
+       - [ ] Command-line options
+     - [ ] Hybrid mode implementation
+       - [ ] Combined output support
+       - [ ] Flexible configuration
 
 ## Recent Improvements
 1. Shape Detection ✓
@@ -120,6 +141,13 @@ Phase 3 is beginning with:
 - [ ] UI improvements
 - [ ] Performance optimization
 
+#### Week 5-6
+- [ ] Advanced image output implementation
+  - [ ] Separate image extraction system
+  - [ ] Enhanced textual descriptions
+  - [ ] Configuration options
+  - [ ] Hybrid mode support
+
 ## References
 - Related to projectRoadmap.md: Phase 3 Milestones
 - Detailed in techStack.md: Current Dependencies
@@ -132,6 +160,7 @@ Phase 3 is beginning with:
 - Regular testing throughout implementation
 - Documentation being updated continuously
 - All tests passing successfully
+- New Phase 3 image output options planned
 
 ## Current Branch
 - Working in 'phase2' branch
